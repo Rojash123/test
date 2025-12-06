@@ -11,10 +11,10 @@ public class PanelScaleAnimation : MonoBehaviour
     private void OnEnable()
     {
         childPanel.transform.localScale=Vector2.zero;
-        closeButton.interactable = false;
+        if (closeButton != null) closeButton.interactable = false;
         LeanTween.scale(childPanel, Vector2.one,0.5f).setEaseOutBack().setOnComplete(() =>
         {
-            closeButton.interactable = true;
+            if(closeButton!=null)closeButton.interactable = true;
         });
     }
     private void OnDisable()

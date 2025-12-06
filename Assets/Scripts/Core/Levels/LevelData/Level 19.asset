@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <levelNumber>k__BackingField: 19
   <totalRows>k__BackingField: 8
-  <totalColumns>k__BackingField: 8
+  <totalColumns>k__BackingField: 9
   <iSCompleted>k__BackingField: 0
   <isUnlocked>k__BackingField: 0

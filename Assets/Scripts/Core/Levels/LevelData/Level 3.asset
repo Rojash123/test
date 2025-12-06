@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 3
   m_EditorClassIdentifier: 
   <levelNumber>k__BackingField: 3
-  <totalRows>k__BackingField: 3
+  <totalRows>k__BackingField: 2
   <totalColumns>k__BackingField: 2
-  <iSCompleted>k__BackingField: 0
-  <isUnlocked>k__BackingField: 0
+  <iSCompleted>k__BackingField: 1
+  <isUnlocked>k__BackingField: 1

@@ -25,15 +25,22 @@ public class InGameUIManager : MonoBehaviour
     }
     private void GameEvents_OnRoundCompleted()
     {
+        SoundManager.Instance.PlayGameWin();
+        Invoke(nameof(HandleGameCompletedDelay), 1.5f);
+    }
+    void HandleGameCompletedDelay()
+    {
         levelCompletedPanel.SetActive(true);
     }
     public void Retry()
     {
+        SoundManager.Instance.PlayUIClickSound();
         SceneManager.LoadScene("GameScene");
 
     }
     public void GotoMenu()
     {
+        SoundManager.Instance.PlayUIClickSound();
         SceneManager.LoadScene("LobbyScene");
     }
 }

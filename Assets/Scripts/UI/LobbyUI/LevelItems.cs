@@ -30,6 +30,7 @@ public class LevelItems : MonoBehaviour
     }
     public void OpenUIPanel()
     {
+        SoundManager.Instance.PlayUIClickSound();
         SaveAndLoadDataManager.Instance.currentSelectedLevel = levelNumber - 1;
         levelManager.OpenLevelStartUI(titleText.text, dimension);
     }

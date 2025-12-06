@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundClass:
   - type: 0
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 5bb7bfce48740a44aaffbefbbd496447, type: 3}
   - type: 1
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 87aa38c5db978ff409981c2a2099e44f, type: 3}
   - type: 2
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 787233462e79fd64c9641a58567dd9fe, type: 3}
   - type: 3
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4274b4ba9ecee5c4e956a36d9790bdee, type: 3}
   - type: 4
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4c0230e17598df54d8d162b2c98776dd, type: 3}
   - type: 5
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4c0230e17598df54d8d162b2c98776dd, type: 3}
+  - type: 6
+    clip: {fileID: 8300000, guid: 7101a46db3dfcbe438ba7193abe83074, type: 3}

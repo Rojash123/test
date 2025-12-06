@@ -52,7 +52,7 @@ public class CardSpawner : MonoBehaviour
             cardPositions.Add(GetCenteredCellPosition(i, columnCount, rowCount));
         }
         SpawnCards(rowCount * columnCount);
-        roundScore = (rowCount * columnCount)/2;
+        roundScore = (rowCount * columnCount) / 2;
     }
     private Vector2 GetCenteredCellPosition(int index, int columns, int rows)
     {
@@ -78,6 +78,8 @@ public class CardSpawner : MonoBehaviour
         cardsList.Clear();
         float delay = 0.5f;
         int startindex = Random.Range(0, icons.GetCount());
+
+        SoundManager.Instance.PlayCardDistrbute();
         for (int i = 0; i < totalItemsCount; i++)
         {
             int randomPositionIndex = Random.Range(0, cardPositions.Count);
@@ -90,7 +92,15 @@ public class CardSpawner : MonoBehaviour
             cardPositions.RemoveAt(randomPositionIndex);
             item.SetData(data);
             cardsList.Add(item);
-            delay += 0.1f;
+            delay += 0.4f / totalItemsCount;
+        }
+        Invoke(nameof(DelaycardInteractable), 3f);
+    }
+    private void DelaycardInteractable()
+    {
+        foreach (var item in cardsList)
+        {
+            item.MakeButtonInteractable();
         }
     }
 

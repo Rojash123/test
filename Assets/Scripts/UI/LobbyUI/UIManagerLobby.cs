@@ -12,6 +12,7 @@ public class UIManagerLobby : MonoBehaviour
     [SerializeField] TextMeshProUGUI levelTitle;
     [SerializeField] GameObject levelUI;
     [SerializeField] Button startLevelButton;
+    [SerializeField] Button exitButton;
 
     [Header("Sound")]
     [SerializeField] Toggle soundToggle;
@@ -24,6 +25,11 @@ public class UIManagerLobby : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         });
+        exitButton.onClick.AddListener(() =>
+        {
+            SoundManager.Instance.PlayUIClickSound();
+            levelUI.SetActive(false);
+        });
     }
     private void Start()
     {
@@ -34,6 +40,7 @@ public class UIManagerLobby : MonoBehaviour
         uiEvents.OnLevelPanelOpen -= HandlePanelOpen;
         soundToggle.onValueChanged.RemoveAllListeners();
         startLevelButton.onClick.RemoveAllListeners();
+        exitButton.onClick.RemoveAllListeners();
     }
     private void HandlePanelOpen(string arg1, string arg2)
     {
@@ -57,9 +64,14 @@ public class UIManagerLobby : MonoBehaviour
             soundToggle.isOn = true;
         }
     }
-
     void HandleToggleChange(bool value)
     {
         SoundManager.Instance.HandeToggleChange(value);
+    }
+
+    public void OpengitHubUrl()
+    {
+        SoundManager.Instance.PlayUIClickSound();
+        Application.OpenURL("https://github.com/Rojash123/test");
     }
 }

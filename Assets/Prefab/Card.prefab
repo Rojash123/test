@@ -170,6 +170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconHolder: {fileID: 4655466597964778400}
   thisButton: {fileID: 4655466598692309611}
+  rectTransform: {fileID: 4655466598692309591}
+  frontSide: {fileID: 4655466599591292746}
+  backSide: {fileID: 4655466599672603947}
   <itemValue>k__BackingField: 0
   <isFlipped>k__BackingField: 0
 --- !u!114 &4655466598692309611

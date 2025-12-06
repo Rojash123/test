@@ -8,15 +8,17 @@ public class GameEventSO : ScriptableObject
 {
     public event Action OnGameStart;
     public event Action OnGameOver;
-    public event Action OnRoundCompleted;
     public event Action OnGamePaused;
     public event Action OnGameUnpause;
     public event Action OnMatched;
     public event Action OnMisMatch;
 
+    public event Action OnRoundCompleted;
+    public event Action OnLevelDataSynced;
+
     public Action<SaveData> OnSaveFileLoaded;
     /// <summary>
-    /// <br>0-OnGameStart</br><br>1-OnGameOver</br><br>2-OnGamePaused</br><br>3-OnGameUnpause</br>
+    /// <br>0-OnGameStart</br><br>1-OnGameOver</br><br>2-OnGamePaused</br><br>3-OnGameUnpause</br><br>4-OnMatched</br><br>5-OnMisMatch</br><br>6-OnRoundCompleted</br><br>7-OnLevelDataSynced</br>
     /// </summary>
     /// <param name="index"></param>
     public void RaiseEvent(int index)
@@ -36,16 +38,16 @@ public class GameEventSO : ScriptableObject
                 OnGameUnpause?.Invoke();
                 break;
             case 4:
-                OnGameStart?.Invoke();
+                OnMatched?.Invoke();
                 break;
             case 5:
-                OnGameStart?.Invoke();
+                OnMisMatch?.Invoke();
                 break;
             case 6:
-                OnGameStart?.Invoke();
+                OnRoundCompleted?.Invoke();
                 break;
             case 7:
-                OnGameStart?.Invoke();
+                OnLevelDataSynced?.Invoke();
                 break;
         }
     }

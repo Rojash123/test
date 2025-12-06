@@ -11,10 +11,12 @@ public class LevelItems : MonoBehaviour
     [SerializeField] TextMeshProUGUI titleText;
 
     private string dimension;
-    private LevelManager levelManager;
+    private LevelSpawnner levelManager;
+    private int levelNumber;
 
-    public void SetData(LevelData data,LevelManager manager)
+    public void SetData(LevelData data,LevelSpawnner manager)
     {
+        levelNumber = data.levelNumber;
         levelManager = manager;
         titleText.text = $"LEVEL {data.levelNumber}";
         playStatus.SetActive(data.isUnlocked);
@@ -26,9 +28,9 @@ public class LevelItems : MonoBehaviour
         }
         dimension = $"{data.totalRows}x{data.totalColumns}";
     }
-
     public void OpenUIPanel()
     {
+        SaveAndLoadDataManager.Instance.currentSelectedLevel = levelNumber - 1;
         levelManager.OpenLevelStartUI(titleText.text, dimension);
     }
 

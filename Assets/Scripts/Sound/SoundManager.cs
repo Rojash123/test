@@ -21,6 +21,7 @@ public class SoundManager : Singleton<SoundManager>
     public override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(this);
     }
     public void HandeToggleChange(bool isSoundOn)
     {

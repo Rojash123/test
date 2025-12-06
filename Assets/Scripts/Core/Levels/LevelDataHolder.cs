@@ -8,15 +8,17 @@ public class LevelDataHolder : Singleton<LevelDataHolder>
     [SerializeField] GameEventSO gameEvents;
 
     public List<LevelData> LevelSODatas;
+
+    private int currentLevel;
     public override void Awake()
     {
         base.Awake();
-        gameEvents.OnSaveFileLoaded += OnSaveDataUpdated;
         DontDestroyOnLoad(this);
+        gameEvents.OnSaveFileLoaded += OnSaveDataUpdated;
     }
     private void OnDestroy()
     {
-        gameEvents.OnSaveFileLoaded += OnSaveDataUpdated;
+        gameEvents.OnSaveFileLoaded -= OnSaveDataUpdated;
     }
     private void OnSaveDataUpdated(SaveData data)
     {

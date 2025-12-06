@@ -25,6 +25,7 @@ public class SoundManager : Singleton<SoundManager>
     }
     public void HandeToggleChange(bool isSoundOn)
     {
+        SoundManager.Instance.PlayUIClickSound();
         IsSoundMuted = !isSoundOn;
     }
     public void PlayUIClickSound()
@@ -57,4 +58,10 @@ public class SoundManager : Singleton<SoundManager>
         if (IsSoundMuted) return;
         sfxAudioSource.PlayOneShot(soundSO.GetSound(SoundType.CardDistrbute));
     }
+    public void PlayGameWin()
+    {
+        if (IsSoundMuted) return;
+        sfxAudioSource.PlayOneShot(soundSO.GetSound(SoundType.RoundWin));
+    }
+
 }

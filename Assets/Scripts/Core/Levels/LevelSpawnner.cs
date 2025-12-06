@@ -13,6 +13,10 @@ public class LevelSpawnner : MonoBehaviour
     {
         gameEvents.OnLevelDataSynced += SpawnLevelPrefabs;
     }
+    private void Start()
+    {
+        SaveAndLoadDataManager.Instance.LoadData();
+    }
     private void OnDestroy()
     {
         gameEvents.OnLevelDataSynced -= SpawnLevelPrefabs;

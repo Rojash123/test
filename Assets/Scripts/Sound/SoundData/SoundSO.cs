@@ -31,5 +31,6 @@ public enum SoundType
     Combo,
     UIClick,
     CardFlip,
-    CardDistrbute
+    CardDistrbute,
+    RoundWin
 }

@@ -18,6 +18,11 @@ public class SaveAndLoadDataManager:Singleton<SaveAndLoadDataManager>
         base.Awake();
         DontDestroyOnLoad(this);
         gameEvents.OnRoundCompleted += GameEvents_OnRoundCompleted;
+        PlayGameOn60FPS();
+    }
+    void PlayGameOn60FPS()
+    {
+        Application.targetFrameRate = 60;
     }
 
     private void OnDestroy()
@@ -31,12 +36,7 @@ public class SaveAndLoadDataManager:Singleton<SaveAndLoadDataManager>
         currentData.currentLevel++;
         SaveData();
     }
-
-    private void Start()
-    {
-        LoadData();
-    }
-    void LoadData()
+    public void LoadData()
     {
         if (!File.Exists(filePath))
         {

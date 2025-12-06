@@ -25,7 +25,10 @@ public class CardItem : MonoBehaviour
     private void OnDestroy()
     {
         thisButton.onClick.RemoveAllListeners();
+        LeanTween.cancel(gameObject);
     }
+
+    #region SetDataAndHandleButtonClick
     public void SetData(CardData data)
     {
         rectTransform.sizeDelta = data.size;
@@ -35,11 +38,7 @@ public class CardItem : MonoBehaviour
         finalPos = data.pos;
         rectTransform.anchoredPosition += new Vector2(0,Screen.height*2);
         Flip(false);
-        LeanTween.moveLocal(gameObject, finalPos, 0.7f).setEaseOutBack().setDelay(data.delay).setOnComplete(() =>
-        {
-            Flip(false);
-            thisButton.interactable = true;
-        });
+        LeanTween.moveLocal(gameObject, finalPos, 0.7f).setEaseOutBack().setDelay(data.delay);
     }
     void OnButtonClick()
     {
@@ -48,8 +47,14 @@ public class CardItem : MonoBehaviour
     }
     public void MakeButtonInteractable()
     {
+        Flip(false);
+        Invoke(nameof(DelayButtonInteractable), 0.2f);
+    }
+    private void DelayButtonInteractable()
+    {
         thisButton.interactable = true;
     }
+    #endregion
 
     #region FlipAndMatchLogic
     public void Flip(bool canCheck)
@@ -63,6 +68,7 @@ public class CardItem : MonoBehaviour
     }
     void HandleCardMatch()
     {
+        SoundManager.Instance.PlayFlipCard();
         if (previousPickedCard == null)
         {
             previousPickedCard = this;
@@ -103,8 +109,8 @@ public class CardItem : MonoBehaviour
         itemToCheckWith.Flip(false);
         Flip(false);
         yield return new WaitForSecondsRealtime(0.1f);
-        itemToCheckWith.MakeButtonInteractable();
-        MakeButtonInteractable();
+        itemToCheckWith.DelayButtonInteractable();
+        DelayButtonInteractable();
     }
     #endregion
 

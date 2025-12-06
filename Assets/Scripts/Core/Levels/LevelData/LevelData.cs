@@ -20,4 +20,9 @@ public class LevelData : ScriptableObject
     {
         iSCompleted = true;
     }
+    public void ResetData()
+    {
+        isUnlocked = false;
+        iSCompleted = false;
+    }
 }

@@ -9,6 +9,8 @@ public class ScoreAndTurnHandler : MonoBehaviour
     [SerializeField] GameEventSO gameEvents;
     [SerializeField] TextMeshProUGUI scoreText,totalNoOfAttempsText;
     [SerializeField] TextMeshProUGUI scoreTextPanel,totalNoOfAttempsTextPanel;
+    [SerializeField] ComboAnimate comboTextPrefab;
+    [SerializeField] Transform  effectsParent;
 
     private int continuousHit=0;
     private int score = 0;
@@ -56,11 +58,23 @@ public class ScoreAndTurnHandler : MonoBehaviour
         continuousHit = 0;
         Score -= 20;
         TotalTurn++;
+        SoundManager.Instance.NotMatchedSound();
     }
     private void GameEvent_OnMatched()
     {
         continuousHit++;
         Score += continuousHit*baseScoreIncrement;
+        if(continuousHit > 1)
+        {
+            SoundManager.Instance.PlayComboSound();
+            ComboAnimate comboText = Instantiate(comboTextPrefab, effectsParent);
+            comboText.SetCombo(continuousHit);
+            comboText.gameObject.SetActive(true);
+        }
+        else
+        {
+            SoundManager.Instance.PlayMatchedSound();
+        }
         TotalTurn++;
     }
 }

@@ -15,7 +15,7 @@ public class LevelSpawnner : MonoBehaviour
     }
     private void OnDestroy()
     {
-        gameEvents.OnLevelDataSynced += SpawnLevelPrefabs;
+        gameEvents.OnLevelDataSynced -= SpawnLevelPrefabs;
     }
     private void SpawnLevelPrefabs()
     {

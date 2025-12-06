@@ -8,6 +8,8 @@ public class ScoreAndTurnHandler : MonoBehaviour
 {
     [SerializeField] GameEventSO gameEvents;
     [SerializeField] TextMeshProUGUI scoreText,totalNoOfAttempsText;
+    [SerializeField] TextMeshProUGUI scoreTextPanel,totalNoOfAttempsTextPanel;
+
     private int continuousHit=0;
     private int score = 0;
     private int baseScoreIncrement = 50;
@@ -20,6 +22,7 @@ public class ScoreAndTurnHandler : MonoBehaviour
         {
             score = value;
             scoreText.text = score.ToString();
+            scoreTextPanel.text = score.ToString();
         }
     }
     public int TotalTurn
@@ -29,6 +32,7 @@ public class ScoreAndTurnHandler : MonoBehaviour
         {
             totalTurn = value;
             totalNoOfAttempsText.text = value.ToString();
+            totalNoOfAttempsTextPanel.text=value.ToString();    
         }
     }
     private void Awake()
@@ -56,7 +60,7 @@ public class ScoreAndTurnHandler : MonoBehaviour
     private void GameEvent_OnMatched()
     {
         continuousHit++;
-        Score = continuousHit*baseScoreIncrement;
+        Score += continuousHit*baseScoreIncrement;
         TotalTurn++;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SaveAndLoadDataManager:Singleton<SaveAndLoadDataManager>
 {
-    [SerializeField] GameEventSO gameEvents;
+    public GameEventSO gameEvents;
 
     private const string fileName="match.data";
     private string filePath;
@@ -17,7 +17,21 @@ public class SaveAndLoadDataManager:Singleton<SaveAndLoadDataManager>
         filePath=Path.Combine(Application.persistentDataPath,fileName);
         base.Awake();
         DontDestroyOnLoad(this);
+        gameEvents.OnRoundCompleted += GameEvents_OnRoundCompleted;
     }
+
+    private void OnDestroy()
+    {
+        gameEvents.OnRoundCompleted -= GameEvents_OnRoundCompleted;
+    }
+    private void GameEvents_OnRoundCompleted()
+    {
+        currentSelectedLevel++;
+        if (currentSelectedLevel < currentData.currentLevel) return;
+        currentData.currentLevel++;
+        SaveData();
+    }
+
     private void Start()
     {
         LoadData();

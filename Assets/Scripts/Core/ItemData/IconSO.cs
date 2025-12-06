@@ -6,7 +6,10 @@ using UnityEngine;
 public class IconSO : ScriptableObject
 {
     [SerializeField] private List<Sprite> icon;
-
+    public int GetCount()
+    {
+        return icon.Count;
+    }
     public Sprite GetSprite(int index)
     {
         return icon[index];

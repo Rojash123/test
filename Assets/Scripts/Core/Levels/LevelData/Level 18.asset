@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 18
   m_EditorClassIdentifier: 
   <levelNumber>k__BackingField: 18
-  <totalRows>k__BackingField: 8
-  <totalColumns>k__BackingField: 7
+  <totalRows>k__BackingField: 9
+  <totalColumns>k__BackingField: 8
   <iSCompleted>k__BackingField: 0
   <isUnlocked>k__BackingField: 0

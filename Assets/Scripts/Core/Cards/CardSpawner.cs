@@ -10,21 +10,27 @@ public class CardSpawner : MonoBehaviour
     [SerializeField] GridLayoutGroup gridLayout;
     [SerializeField] IconSO icons;
 
-    private List<CardItem> cardsList=new List<CardItem>();
-    private List<Vector2> cardPositions=new List<Vector2>();
+    private List<CardItem> cardsList = new List<CardItem>();
+    private List<Vector2> cardPositions = new List<Vector2>();
     private Vector2 cardSize;
 
+    float roundScore = 0, currentScore = 0;
     private void Awake()
     {
-        gameEvents.OnGameStart += GridLayoutSizeAdjustment;
+        gameEvents.OnMatched += GameEvents_OnMatched;
     }
     private void OnDestroy()
     {
-        gameEvents.OnGameStart -= GridLayoutSizeAdjustment;
+        gameEvents.OnMatched -= GameEvents_OnMatched;
     }
     private void Start()
     {
         GridLayoutSizeAdjustment();
+    }
+    private void GameEvents_OnMatched()
+    {
+        currentScore++;
+        if (currentScore >= roundScore) gameEvents.RaiseEvent(6);
     }
     private void GridLayoutSizeAdjustment()
     {
@@ -43,9 +49,10 @@ public class CardSpawner : MonoBehaviour
 
         for (int i = 0; i < rowCount * columnCount; i++)
         {
-            cardPositions.Add(GetCenteredCellPosition(i,columnCount,rowCount));
+            cardPositions.Add(GetCenteredCellPosition(i, columnCount, rowCount));
         }
-        SpawnCards(rowCount*columnCount);
+        SpawnCards(rowCount * columnCount);
+        roundScore = (rowCount * columnCount)/2;
     }
     private Vector2 GetCenteredCellPosition(int index, int columns, int rows)
     {
@@ -70,10 +77,17 @@ public class CardSpawner : MonoBehaviour
     {
         cardsList.Clear();
         float delay = 0.5f;
+        int startindex = Random.Range(0, icons.GetCount());
         for (int i = 0; i < totalItemsCount; i++)
         {
+            int randomPositionIndex = Random.Range(0, cardPositions.Count);
             CardItem item = Instantiate(cardPrefab, cardSpawnHolder);
-            CardData data = new CardData(cardSize, cardPositions[i],icons.GetSprite(0), 0, delay);
+            if (i % 2 == 0 && i != 0)
+            {
+                startindex = (startindex + 1) % icons.GetCount();
+            }
+            CardData data = new CardData(cardSize, cardPositions[randomPositionIndex], icons.GetSprite(startindex), startindex, delay);
+            cardPositions.RemoveAt(randomPositionIndex);
             item.SetData(data);
             cardsList.Add(item);
             delay += 0.1f;

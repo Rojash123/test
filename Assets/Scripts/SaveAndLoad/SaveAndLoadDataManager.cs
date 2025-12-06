@@ -10,6 +10,7 @@ public class SaveAndLoadDataManager:Singleton<SaveAndLoadDataManager>
     private string filePath;
 
     public SaveData currentData;
+    public int currentSelectedLevel;
 
     public override void Awake()
     {

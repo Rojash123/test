@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManagerLobby : MonoBehaviour
@@ -13,7 +11,7 @@ public class UIManagerLobby : MonoBehaviour
     [SerializeField] TextMeshProUGUI levelDetails;
     [SerializeField] TextMeshProUGUI levelTitle;
     [SerializeField] GameObject levelUI;
-
+    [SerializeField] Button startLevelButton;
 
     [Header("Sound")]
     [SerializeField] Toggle soundToggle;
@@ -21,7 +19,11 @@ public class UIManagerLobby : MonoBehaviour
     private void Awake()
     {
         uiEvents.OnLevelPanelOpen += HandlePanelOpen;
-        soundToggle.onValueChanged.AddListener(SoundManager.Instance.HandeToggleChange);
+        soundToggle.onValueChanged.AddListener(HandleToggleChange);
+        startLevelButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
     }
     private void Start()
     {
@@ -31,6 +33,7 @@ public class UIManagerLobby : MonoBehaviour
     {
         uiEvents.OnLevelPanelOpen -= HandlePanelOpen;
         soundToggle.onValueChanged.RemoveAllListeners();
+        startLevelButton.onClick.RemoveAllListeners();
     }
     private void HandlePanelOpen(string arg1, string arg2)
     {
@@ -53,5 +56,10 @@ public class UIManagerLobby : MonoBehaviour
         {
             soundToggle.isOn = true;
         }
+    }
+
+    void HandleToggleChange(bool value)
+    {
+        SoundManager.Instance.HandeToggleChange(value);
     }
 }

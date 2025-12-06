@@ -1,46 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public class LevelSpawnner : MonoBehaviour
 {
     [SerializeField] GameEventSO gameEvents;
     [SerializeField] UIEventSO uiEvents;
-    [SerializeField] List<LevelData> LevelSODatas;
+
     [SerializeField] LevelItems levelItemPrefab;
     [SerializeField] Transform levelHolder;
 
     private void Awake()
     {
-        gameEvents.OnSaveFileLoaded += OnSaveDataLoaded;
+        gameEvents.OnLevelDataSynced += SpawnLevelPrefabs;
     }
     private void OnDestroy()
     {
-        gameEvents.OnSaveFileLoaded += OnSaveDataLoaded;
+        gameEvents.OnLevelDataSynced += SpawnLevelPrefabs;
     }
-    private void OnSaveDataLoaded(SaveData data)
+    private void SpawnLevelPrefabs()
     {
-        int currentLevelCount = data.currentLevel;
-        for (int i = 0; i < LevelSODatas.Count; i++)
+        for (int i = 0; i < LevelDataHolder.Instance.LevelSODatas.Count; i++)
         {
             LevelItems levelItem = Instantiate(levelItemPrefab,levelHolder.position, Quaternion.identity);
             levelItem.transform.SetParent(levelHolder);
-            if (i <= currentLevelCount)
-            {
-                if(i< currentLevelCount)
-                {
-                    LevelSODatas[i].LevelCompleted();
-                }
-                LevelSODatas[i].UnlockLevel();
-            }
-            levelItem.SetData(LevelSODatas[i],this);
+            levelItem.SetData(LevelDataHolder.Instance.LevelSODatas[i],this);
             levelItem.gameObject.SetActive(true);
         }
 
     }
-
     public void OpenLevelStartUI(string levelString, string dimensionString)
     {
         uiEvents.OnLevelPanelOpen?.Invoke(levelString, dimensionString);
     }
-
 }

@@ -7,6 +7,8 @@ public class CardItem : MonoBehaviour
     [Header("References")]
     [SerializeField] Image iconHolder;
     [SerializeField] private Button thisButton;
+    [SerializeField]private RectTransform rectTransform;
+    [SerializeField] GameObject frontSide, backSide;
 
     [field: SerializeField] public int itemValue { get; private set; }
     [field: SerializeField] public bool isFlipped { get; private set; }
@@ -14,7 +16,8 @@ public class CardItem : MonoBehaviour
     
     private CardItem itemToCheckWith;
     private float flipRotationFinalY = 180;
-    private RectTransform rectTransform;
+
+    private Vector2 finalPos;
 
     private void Start()
     {
@@ -81,15 +84,17 @@ public class CardItem : MonoBehaviour
     }
     #endregion
 
-    public void InitialiseData(CardData data)
+    public void SetData(CardData data)
     {
         rectTransform.sizeDelta = data.size;
         iconHolder.sprite= data.icon;
         itemValue = data.itemValue;
-        LeanTween.move(gameObject, data.Pos, 0.5f).setEaseOutBack().setDelay(data.delay).setOnComplete(()=> 
+        rectTransform.anchoredPosition = data.pos;
+        finalPos = data.pos;
+        rectTransform.anchoredPosition += new Vector2(0,Screen.width*2);
+        LeanTween.moveLocal(gameObject, finalPos, 0.7f).setEaseOutBack().setDelay(data.delay).setOnComplete(() =>
         {
-            thisButton.interactable = false;
+            thisButton.interactable = true;
         });
     }
-
 }

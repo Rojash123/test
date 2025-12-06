@@ -11,4 +11,13 @@ public class LevelData : ScriptableObject
     [field: SerializeField] public int totalColumns { get; private set; }
     [field: SerializeField] public bool iSCompleted { get; private set; }
     [field: SerializeField] public bool isUnlocked { get; private set; }
+
+    public void UnlockLevel()
+    {
+        isUnlocked = true;
+    }
+    public void LevelCompleted()
+    {
+        iSCompleted = true;
+    }
 }

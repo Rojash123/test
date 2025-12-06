@@ -1,6 +1,5 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveAndLoadDataManager:Singleton<SaveAndLoadDataManager>
@@ -14,15 +13,14 @@ public class SaveAndLoadDataManager:Singleton<SaveAndLoadDataManager>
 
     public override void Awake()
     {
-        filePath=Path.Combine(Application.dataPath,fileName);
+        filePath=Path.Combine(Application.persistentDataPath,fileName);
         base.Awake();
+        DontDestroyOnLoad(this);
     }
     private void Start()
     {
         LoadData();
     }
-
-
     void LoadData()
     {
         if (!File.Exists(filePath))
@@ -36,13 +34,11 @@ public class SaveAndLoadDataManager:Singleton<SaveAndLoadDataManager>
         loadFile.Close();
         gameEvents.OnSaveFileLoaded?.Invoke(currentData);
     }
-
     void CreateNewFile()
     {
-        currentData= new(PlayerPrefs.GetString("name"), 1, 0);
+        currentData= new(PlayerPrefs.GetString("name"), 0, 0);
         SaveData();
     }
-
     public void SaveData()
     {
         BinaryFormatter bf = new BinaryFormatter();

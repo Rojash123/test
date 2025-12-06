@@ -8,9 +8,13 @@ public class GameEventSO : ScriptableObject
 {
     public event Action OnGameStart;
     public event Action OnGameOver;
+    public event Action OnRoundCompleted;
     public event Action OnGamePaused;
     public event Action OnGameUnpause;
+    public event Action OnMatched;
+    public event Action OnMisMatch;
 
+    public Action<SaveData> OnSaveFileLoaded;
     /// <summary>
     /// <br>0-OnGameStart</br><br>1-OnGameOver</br><br>2-OnGamePaused</br><br>3-OnGameUnpause</br>
     /// </summary>
@@ -45,4 +49,5 @@ public class GameEventSO : ScriptableObject
                 break;
         }
     }
+
 }

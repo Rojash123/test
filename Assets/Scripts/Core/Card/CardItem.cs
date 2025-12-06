@@ -1,24 +1,25 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CardItem : MonoBehaviour
 {
-    public static CardItem previousPickedCard { get; private set; }
-    private CardItem itemToCheckWith;
-
     [Header("References")]
     [SerializeField] Image iconHolder;
     [SerializeField] private Button thisButton;
-    [field: SerializeField] public int index { get; private set; }
-    [field: SerializeField] public bool isFlipped { get; private set; }
 
+    [field: SerializeField] public int itemValue { get; private set; }
+    [field: SerializeField] public bool isFlipped { get; private set; }
+    public static CardItem previousPickedCard { get; private set; }
+    
+    private CardItem itemToCheckWith;
     private float flipRotationFinalY = 180;
+    private RectTransform rectTransform;
 
     private void Start()
     {
         thisButton.onClick.AddListener(OnButtonClick);
+        rectTransform= GetComponent<RectTransform>();
     }
     private void OnDestroy()
     {
@@ -33,6 +34,8 @@ public class CardItem : MonoBehaviour
     {
         thisButton.interactable = true;
     }
+
+    #region FlipAndMatchLogic
     public void Flip(bool canCheck)
     {
         isFlipped = !isFlipped;
@@ -58,16 +61,16 @@ public class CardItem : MonoBehaviour
     {
         itemToCheckWith = previousPickedCard;
         previousPickedCard = null;
-        if (itemToCheckWith.index == index)
+        if (itemToCheckWith.itemValue == itemValue)
         {
             MyDebug.Log("Matched");
         }
         else
         {
-            StartCoroutine(IflipBothCardBackToNormal());
+            StartCoroutine(I_FlipCardBackToNormalState());
         }
     }
-    IEnumerator IflipBothCardBackToNormal()
+    IEnumerator I_FlipCardBackToNormalState()
     {
         yield return new WaitForSecondsRealtime(0.1f);
         itemToCheckWith.Flip(false);
@@ -76,4 +79,17 @@ public class CardItem : MonoBehaviour
         itemToCheckWith.MakeButtonInteractable();
         MakeButtonInteractable();
     }
+    #endregion
+
+    public void InitialiseData(CardData data)
+    {
+        rectTransform.sizeDelta = data.size;
+        iconHolder.sprite= data.icon;
+        itemValue = data.itemValue;
+        LeanTween.move(gameObject, data.Pos, 0.5f).setEaseOutBack().setDelay(data.delay).setOnComplete(()=> 
+        {
+            thisButton.interactable = false;
+        });
+    }
+
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -12,39 +13,18 @@ public class SoundManager : Singleton<SoundManager>
         set
         {
             isSoundMuted = value;
+            bgAudioSource.mute = value;
+            sfxAudioSource.mute = value;
             PlayerPrefs.SetInt("sound", value ? 0 : 1);
         }
     }
     public override void Awake()
     {
         base.Awake();
-        if (!PlayerPrefs.HasKey("sound"))
-        {
-            IsSoundMuted = false;
-            return;
-        }
-        if (PlayerPrefs.GetInt("sound") == 0)
-        {
-            IsSoundMuted = true;
-        }
-        else
-        {
-            IsSoundMuted = false;
-        }
     }
-    private void Start()
+    public void HandeToggleChange(bool isSoundOn)
     {
-        EnableBGmusic();
-    }
-    public void EnableBGmusic()
-    {
-        if (IsSoundMuted) return;
-        Debug.Log("enabled");
-        bgAudioSource.Play();
-    }
-    public void DisableBGmusic()
-    {
-        bgAudioSource.Stop();
+        IsSoundMuted = !isSoundOn;
     }
     public void PlayUIClickSound()
     {
